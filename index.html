@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CTRON — Your Private Wealth Workspace</title>
+<meta name="description" content="CTRON is a private, local-first wealth workspace for individual investors. Track net worth, budgets, goals, and portfolios on your iPhone — no account required." />
+<style>
+  :root {
+    --bg: #0b0d10;
+    --surface: #14181d;
+    --surface-2: #1b2127;
+    --text: #f3f5f7;
+    --muted: #a4adb6;
+    --accent: #d8a24a;
+    --accent-2: #8ec5ff;
+    --border: #232a31;
+    --radius: 16px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: radial-gradient(1200px 600px at 80% -10%, rgba(216,162,74,0.12), transparent 60%),
+                radial-gradient(900px 500px at -10% 110%, rgba(142,197,255,0.08), transparent 60%),
+                var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  header {
+    padding: 28px 0;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: rgba(11,13,16,0.85);
+    backdrop-filter: saturate(180%) blur(12px);
+    z-index: 10;
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; }
+  .brand {
+    display: flex; align-items: center; gap: 12px;
+    font-weight: 700; letter-spacing: 0.5px; font-size: 18px;
+  }
+  .brand-mark {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: linear-gradient(135deg, var(--accent), #b07a2a);
+    display: inline-flex; align-items: center; justify-content: center;
+    color: #1b1300; font-weight: 800;
+  }
+  .nav-links a {
+    color: var(--muted); text-decoration: none; margin-left: 22px; font-size: 14px;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  .hero { padding: 96px 0 72px; text-align: center; }
+  .eyebrow {
+    display: inline-block; padding: 6px 12px; border: 1px solid var(--border);
+    border-radius: 999px; color: var(--muted); font-size: 12px; letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  h1 {
+    font-size: clamp(40px, 6vw, 64px);
+    line-height: 1.05; margin: 20px 0 16px;
+    letter-spacing: -0.02em;
+  }
+  .grad {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .lead { color: var(--muted); font-size: 18px; max-width: 720px; margin: 0 auto 28px; }
+  .cta-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 22px; border-radius: 12px; font-weight: 600;
+    text-decoration: none; font-size: 15px; transition: transform 0.15s ease, background 0.15s ease;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-primary { background: linear-gradient(135deg, var(--accent), #b07a2a); color: #1b1300; }
+  .btn-ghost { border: 1px solid var(--border); color: var(--text); background: transparent; }
+
+  .section { padding: 72px 0; }
+  .section h2 {
+    font-size: clamp(28px, 3.5vw, 36px);
+    margin: 0 0 12px; letter-spacing: -0.01em;
+  }
+  .section .sub { color: var(--muted); max-width: 720px; margin: 0 0 40px; }
+
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+  }
+  .card h3 { margin: 0 0 8px; font-size: 18px; }
+  .card p { margin: 0; color: var(--muted); font-size: 14px; }
+  .card .icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: linear-gradient(135deg, rgba(216,162,74,0.2), rgba(142,197,255,0.15));
+    display: inline-flex; align-items: center; justify-content: center;
+    margin-bottom: 14px; font-size: 20px;
+  }
+
+  .phone {
+    width: 280px; height: 560px; border-radius: 40px;
+    background: linear-gradient(180deg, #1d242b, #0e1216);
+    border: 8px solid #0b0c0f;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.04);
+    padding: 18px; position: relative;
+  }
+  .phone .notch {
+    position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
+    width: 110px; height: 22px; background: #0b0c0f; border-radius: 14px;
+  }
+  .screen {
+    height: 100%; border-radius: 28px; overflow: hidden; padding: 28px 16px 16px;
+    background: linear-gradient(180deg, #11151a, #0b0d10);
+  }
+  .screen h4 { margin: 6px 0 14px; font-size: 14px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
+  .metric { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; }
+  .chart {
+    height: 160px; margin: 16px 0; border-radius: 12px;
+    background:
+      linear-gradient(180deg, rgba(216,162,74,0.25), rgba(216,162,74,0) 60%),
+      repeating-linear-gradient(0deg, transparent 0 38px, rgba(255,255,255,0.04) 38px 39px);
+    border: 1px solid var(--border); position: relative;
+  }
+  .chart svg { width: 100%; height: 100%; display: block; }
+  .row { display: flex; justify-content: space-between; color: var(--muted); font-size: 12px; margin-top: 10px; }
+
+  .features-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: center; }
+  .features-list { list-style: none; padding: 0; margin: 0; }
+  .features-list li {
+    padding: 14px 0; border-bottom: 1px solid var(--border);
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .features-list li:last-child { border-bottom: none; }
+  .check {
+    width: 22px; height: 22px; border-radius: 6px;
+    background: rgba(216,162,74,0.18); color: var(--accent);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 13px; flex: 0 0 22px; margin-top: 2px;
+  }
+
+  .cta-band {
+    margin: 40px 0 80px;
+    background: linear-gradient(135deg, rgba(216,162,74,0.12), rgba(142,197,255,0.08));
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 40px;
+    text-align: center;
+  }
+  .cta-band h3 { margin: 0 0 8px; font-size: 24px; }
+  .cta-band p { margin: 0 0 18px; color: var(--muted); }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 0 56px;
+    color: var(--muted); font-size: 13px;
+  }
+  .foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  .foot a { color: var(--muted); text-decoration: none; margin-left: 18px; }
+  .foot a:hover { color: var(--text); }
+
+  @media (max-width: 820px) {
+    .grid { grid-template-columns: 1fr; }
+    .features-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .hero { padding: 64px 0 40px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="brand">
+      <span class="brand-mark">C</span>
+      <span>CTRON</span>
+    </div>
+    <nav class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#privacy">Privacy</a>
+      <a href="Support.html">Support</a>
+      <a href="Terms of Use.html">Terms</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Private · Local · Yours</span>
+    <h1>Your entire financial life,<br/><span class="grad">beautifully organized.</span></h1>
+    <p class="lead">CTRON is a private, local-first wealth workspace built for individual investors who want to manage every dollar of their financial life in one elegant iPhone app.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="Support.html">Get Support</a>
+      <a class="btn btn-ghost" href="#features">Learn more</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="features">
+  <div class="wrap">
+    <h2>Everything in one place</h2>
+    <p class="sub">Track net worth, cash flow, budgets, savings goals, and your investment portfolio — all from a single, beautifully designed dashboard.</p>
+
+    <div class="grid">
+      <div class="card">
+        <div class="icon">$</div>
+        <h3>Net Worth Dashboard</h3>
+        <p>Surface net worth, monthly cash flow, and a six-month trend line at a glance with interactive Swift Charts.</p>
+      </div>
+      <div class="card">
+        <div class="icon">↗</div>
+        <h3>Investment Portfolio</h3>
+        <p>Track stocks, ETFs, bonds, REITs, mutual funds, and more — with manual price updates, allocation breakdowns, and 90-day price history.</p>
+      </div>
+      <div class="card">
+        <div class="icon">◎</div>
+        <h3>Smart Budgets</h3>
+        <p>Set monthly budgets across seventeen categories with rollover support and real-time progress that glows green, amber, or red.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🎯</div>
+        <h3>Savings Goals</h3>
+        <p>Plan ahead for emergencies, down payments, retirement, and travel with priority levels and target dates.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🧾</div>
+        <h3>Receipts & Records</h3>
+        <p>Snap receipts or import photos and attach them directly to transactions so every dollar has a clear story.</p>
+      </div>
+      <div class="card">
+        <div class="icon">✦</div>
+        <h3>Insights & Reports</h3>
+        <p>Monthly reports and a three, six, and twelve-month insights tab reveal your savings rate and emerging patterns.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap features-grid">
+    <div class="phone" aria-hidden="true">
+      <span class="notch"></span>
+      <div class="screen">
+        <h4>Net Worth</h4>
+        <div class="metric">$284,510</div>
+        <div class="chart">
+          <svg viewBox="0 0 240 160" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="g" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0%" stop-color="#d8a24a" stop-opacity="0.55"/>
+                <stop offset="100%" stop-color="#d8a24a" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <path d="M0,120 L40,100 L80,110 L120,80 L160,70 L200,40 L240,30 L240,160 L0,160 Z" fill="url(#g)"/>
+            <path d="M0,120 L40,100 L80,110 L120,80 L160,70 L200,40 L240,30" stroke="#d8a24a" stroke-width="2" fill="none"/>
+          </svg>
+        </div>
+        <div class="row"><span>Income</span><span>$8,420</span></div>
+        <div class="row"><span>Expenses</span><span>$3,180</span></div>
+        <div class="row"><span>Savings rate</span><span>62%</span></div>
+      </div>
+    </div>
+
+    <div>
+      <h2>Private by design</h2>
+      <p class="sub">All your data stays on your device. Nothing is uploaded, nothing is shared, no account is required.</p>
+      <ul class="features-list">
+        <li><span class="check">✓</span><div><strong>No account.</strong> Open the app and start tracking — no sign-up, no email, no password.</div></li>
+        <li><span class="check">✓</span><div><strong>No cloud sync.</strong> Records, receipts, and portfolios live locally on your iPhone.</div></li>
+        <li><span class="check">✓</span><div><strong>No tracking.</strong> No analytics, no ads, no third-party SDKs profiling your data.</div></li>
+        <li><span class="check">✓</span><div><strong>Information only.</strong> CTRON does not place trades or provide investment advice.</div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="cta-band" id="support">
+    <h3>Need a hand?</h3>
+    <p>Our support team is happy to help with any questions about CTRON.</p>
+    <a class="btn btn-primary" href="Support.html">Contact Support</a>
+  </div>
+</div>
+
+<footer id="privacy">
+  <div class="wrap foot">
+    <div>© 2026 CTRON. All rights reserved.</div>
+    <div>
+      <a href="privacy.html">Privacy</a>
+      <a href="Support.html">Support</a>
+      <a href="Terms of Use.html">Terms of Use</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
